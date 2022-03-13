@@ -54,7 +54,8 @@ const ScatterPlot = () => {
 
   const colorScale = scaleOrdinal()
     .domain(data.map(colorValue))
-    .range(['#2FF3E0', '#F8D210']) ;
+    .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", 
+    "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]) ;
 
   return (
     <div>
