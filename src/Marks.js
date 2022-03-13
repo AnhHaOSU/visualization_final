@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
-function Marks({ data, xScale, yScale, xValue, yValue, tooltipFormat, circleRadius}) {
+function Marks({ data, xScale, yScale, xValue, yValue, colorScale, colorValue, tooltipFormat, circleRadius}) {
 
     // Referenced https://www.newline.co/@dmitryrogozhny/how-to-display-modal-dialog-in-react-with-react-modal--dbf46cda
     const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +52,7 @@ function Marks({ data, xScale, yScale, xValue, yValue, tooltipFormat, circleRadi
     return (
       data.map(d => (
         <>
-        <circle className= "circle" id = {d.Major_code} key={d.Major_code} className="mark" cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={circleRadius} fill="blue" fillOpacity="30%" stroke="blue" strokeOpacity="100%" onClick={() => openModal(d)}>
+        <circle className= "circle" id = {d.Major_code} key={d.Major_code} className="mark" cx={xScale(xValue(d))} cy={yScale(yValue(d))} r={circleRadius} fill={colorScale(colorValue(d))} fillOpacity="30%" stroke="blue" strokeOpacity="100%" onClick={() => openModal(d)}>
           <title>{tooltipFormat(xValue(d))}</title>
         </circle>
         <Modal transparent={false} style={modalStyle} isOpen={isOpen} onRequestClose={closeModal} shouldCloseOnOverlayClick={true} contentLabel="My dialog">

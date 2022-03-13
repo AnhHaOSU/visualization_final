@@ -1,9 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { csv, scaleLinear, max, format, extent, axisBottom  as d3_axisBottom,
-  axisLeft    as d3_axisLeft,
-  scaleLinear as d3_scaleLinear,
-  select      as d3_select } from 'd3';
+import { csv, scaleLinear,  max, format, extent, scaleLinear as d3_scaleLinear, select as d3_select, scaleOrdinal } from 'd3';
 import { useData } from './useData';
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
@@ -28,10 +25,12 @@ const ScatterPlot = () => {
 
   const xValue = d => d.ShareWomen;
   // console.log(data);
-  const xAxisLabel = 'Shareo of Women';
+  const xAxisLabel = 'Percent of Women';
 
   const yValue = d => d.Median;
   const yAxisLabel = 'Median Income';
+
+  const colorValue = d => d.Major_category;
 
   const siFormat = format(",.0%");
   const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
@@ -40,7 +39,6 @@ const ScatterPlot = () => {
     .domain(extent(data, xValue))
     .range([0, innerWidth])
     .nice();
-
 
   // console.log(scaleLinear().domain(extent(data, xValue)));
   // var formatPercent = d3.format(".0%");
@@ -53,6 +51,10 @@ const ScatterPlot = () => {
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
     .range([innerHeight, 0]);
+
+  const colorScale = scaleOrdinal()
+    .domain(data.map(colorValue))
+    .range(['#2FF3E0', '#F8D210']) ;
 
   return (
     <div>
@@ -94,6 +96,10 @@ const ScatterPlot = () => {
           data={data}
           xScale={xScale}
           yScale={yScale}
+          
+          colorScale={colorScale}
+          colorValue={colorValue}
+
           xValue={xValue}
           yValue={yValue}
           tooltipFormat={xAxisTickFormat}
